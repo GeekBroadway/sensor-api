@@ -2,6 +2,18 @@ var winston = require('winston');
 winston.emitErrs = true;
 
 var logger = new winston.Logger({
+    levels: {
+        'debug': 0,
+        'startup': 0,
+        'info': 1,
+        'error': 4
+    },
+    colors: {
+        'debug': 'blue',
+        'startup': 'cyan',
+        'info': 'green',
+        'error': 'red'
+    },
     transports: [
         new winston.transports.File({
             level: 'info',
@@ -13,7 +25,7 @@ var logger = new winston.Logger({
             colorize: false
         }),
         new winston.transports.Console({
-            level: 'debug',
+            level: 'error',
             handleExceptions: true,
             json: false,
             colorize: true

@@ -3,7 +3,9 @@
 echo "Creating default configuration Files"
 cp ../config/config.def.js ../config/config.js
 
+mkdir ../logs
 mkdir ../config/certs/
+
 # HTTPS Certs
 if [[ ! -f ../config/certs/https_key.pem || ! -f ../config/certs/https_cert.pem ]]; then
     echo "Generating openssl Certs"

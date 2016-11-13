@@ -12,12 +12,42 @@ var router = express.Router();
 //Express
 app.use('/api', router);
 router.use(morgan('combined', { 'stream': logger.stream}));
+//Routes
+
+//Hardcoded Routes
+router.get('/', function(req,res) {
+    res.status('200').json({
+        name: 'SensorAPI Root',
+        version: '0.1.0'
+    });
+});
+app.get('/', function(req, res){
+    res.status('200').json({
+        message: 'API is at /api'
+    });
+});
+//Errors and Timeouts
+app.use(function(err, req, res, next) {
+    logger.error(err.stack);
+    res.status(500).json({status: 'Something broke!'});
+    next();
+});
+app.use(function(req, res, next) {
+    res.setTimeout(config.server.timeout, function() {
+            res.status(408).json({
+            success: false,
+            message: "Request Timed Out! an error likely occured"
+        });
+    });
+    next();
+});
+//Server Startup
 startServer();
 function startServer() {
     https.createServer({
         key: fs.readFileSync(config.server.sslKeyPath),
         cert: fs.readFileSync(config.server.sslCertPath)
     }, app).listen(config.server.port, function () {
-        console.log("Ready to go on: " + config.server.port)
+        logger.startup("Ready to go on: " + config.server.port)
     });
 }
