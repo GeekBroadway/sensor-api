@@ -1,7 +1,7 @@
 export DEBIAN_FRONTEND=noninteractive
 DBPASSWD=test123
 sudo apt-get update -y
-sudo apt-get install -y debconf-utils curl
+sudo apt-get install -y debconf-utils curl dos2unix
 
 #Install Node
 curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -

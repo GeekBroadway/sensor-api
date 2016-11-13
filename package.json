@@ -11,7 +11,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "mocha --reporter spec",
-    "postinstall": "cd scripts; ./createConfigs.sh"
+    "postinstall": "cd scripts; ./postInstall.sh"
   },
   "repository": {
     "type": "git",
