@@ -1,6 +1,8 @@
 node_modules/
 .vagrant/
 config/config.js
+config/certs/
+logs/
 
 # IntelliJ Shit
 .idea/workspace.xml
