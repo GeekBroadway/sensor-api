@@ -1,0 +1,10 @@
+node_modules/
+.vagrant/
+config/config.js
+
+# IntelliJ Shit
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
