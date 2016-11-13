@@ -29,12 +29,12 @@ Sensor API is a service to connects single or multiple server devices (Raspberry
 ## POST/GET Locations
 * POST /api/data/ - Append a data point
 * GET /api/data/ - Fetch Data
-..* sensorid = n - Sensor ID Number
-..* timecode = n - Timecode (unix)
-..* A. apikey = # - API Key
-..* B. qakey = # - Quick Authentication Key
+   * sensorid = n - Sensor ID Number
+   * timecode = n - Timecode (unix)
+   * A. apikey = # - API Key
+   * B. qakey = # - Quick Authentication Key
 * GET /api/stats/ - Returns JSON of users statistics
-..* apikey = # - API Key
+   * apikey = # - API Key
 * GET /api/apistats/ - Retruns JSON of API's statistics
-..* apikey = # - API Key
+   * apikey = # - API Key
 * POST /api/auth/ - returns session key
