@@ -1,7 +1,7 @@
 //NPM Packages
 var express = require("express");
 var https = require("https");
-var logger = require('morgan');
+var morgan = require('morgan');
 var winston = require('winston');
 var fs = require('fs');
 //App Components
@@ -11,7 +11,7 @@ var app = express();
 var router = express.Router();
 //Express
 app.use('/api', router);
-router.use(require('morgan')({ "stream": logger.stream }));
+router.use(morgan('combined', { 'stream': logger.stream}));
 startServer();
 function startServer() {
     https.createServer({
