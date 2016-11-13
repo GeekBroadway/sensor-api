@@ -1,0 +1,17 @@
+{
+  "name": "sensor_backend",
+  "version": "1.0.0",
+  "description": "Collects sensor data",
+  "main": "app.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.botonavi.com:sensorapi/backend-api.git"
+  },
+  "author": "sensorapi",
+  "license": "UNLICENSED"
+}
