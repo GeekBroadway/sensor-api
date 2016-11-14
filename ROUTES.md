@@ -14,7 +14,7 @@
 	        * **sensorType=[Int]** - Sensor Type
 	   * **Returns**
 	        * **status=[Boolean]**
-	        * **uuid=[UUIDv4]**
+	        * **sensorId=[UUIDv4]**
    * **POST /API/sensor/remove** - Remove a sensor from the configuration
        * **Arguments**
             * **sensorId=[String]** - Sensor Name
