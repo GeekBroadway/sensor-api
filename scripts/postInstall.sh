@@ -1,13 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "Creating default configuration Files"
-cp ../config/config.def.js ../config/config.js
+cp config/config.def.js config/config.js
 
-mkdir ../logs
-mkdir ../config/certs/
+mkdir logs
+mkdir config/certs/
 
 # HTTPS Certs
-if [[ ! -f ../config/certs/https_key.pem || ! -f ../config/certs/https_cert.pem ]]; then
+if [[ ! -f config/certs/https_key.pem || ! -f config/certs/https_cert.pem ]]; then
     echo "Generating openssl Certs"
-    openssl req -x509 -newkey rsa:2048 -keyout ../config/certs/https_key.pem -out ../config/certs/https_cert.pem -days 365 -nodes -subj '/CN=localhost'
+    openssl req -x509 -newkey rsa:2048 -keyout config/certs/https_key.pem -out config/certs/https_cert.pem -days 365 -nodes -subj '/CN=localhost'
 fi
