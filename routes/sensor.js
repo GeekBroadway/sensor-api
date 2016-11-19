@@ -1,7 +1,6 @@
 //modules
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 //Local includes
 var config = require('../config/config.js');
 var logger = require('../utils/logger.js');
@@ -21,7 +20,7 @@ function postAddSensor(req, res){
         var senName = req.body.name,
             senType = req.body.type,
             senDesc = req.body.desc,
-            senHub = req.body.hub
+            senHub = req.body.hub;
         var newSensor = new Sensor({
            name: senName,
            type: senType,
@@ -31,7 +30,7 @@ function postAddSensor(req, res){
         });
         newSensor.save(function(err){
             if(err) {
-                res.status(500).json({status: false, message: "an error occured"});
+                res.status(500).json({status: false, message: "an error occurred"});
                 logger.error(err);
             } else {
                 res.json({status: true, message: "sensor added", sensorId: newSensor._id});
