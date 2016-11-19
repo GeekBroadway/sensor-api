@@ -11,5 +11,6 @@ config.server.sslKeyPath = config.filesystem.root+'config/certs/https_key.pem';
 
 config.mongo = {};
 config.mongo.url = "mongodb://localhost/sensorapi";
+config.mongo.limit = 100;
 
 module.exports = config;
