@@ -9,7 +9,7 @@ const Schema = mongoose.Schema;
 var DataSchema = new Schema({
     recorded_at: {type: Date, required: true, default: Date.now},
     sensorId: {type: String, required: true},
-    sensorData: {type: String, required: true}
+    sensorData: {type: Schema.Types.Mixed, required: true}
 });
 DataSchema.pre("save", function(next){
     var datapoint = this;
@@ -20,7 +20,7 @@ DataSchema.pre("save", function(next){
             error.maccode = "sen_no_exist";
             return next(error);
         } else {
-             return next();
+            return next();
         }
     })
 });
