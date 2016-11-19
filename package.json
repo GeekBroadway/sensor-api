@@ -4,8 +4,11 @@
   "description": "Collects sensor data",
   "main": "app.js",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "express": "^4.14.0",
+    "mongoose": "^4.6.8",
     "morgan": "^1.7.0",
+    "node-uuid": "^1.4.7",
     "winston": "^2.3.0"
   },
   "devDependencies": {},
