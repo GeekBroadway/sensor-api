@@ -5,7 +5,7 @@ const config = require('../config/config.js');
 //Model Setup
 const Schema = mongoose.Schema;
 
-var SensorSchema = new Schema({
+let SensorSchema = new Schema({
     _id: {type: String, default: uuid.v4, unique: true},
     name: {type: String, required: true},
     type: {type: String, required: true},

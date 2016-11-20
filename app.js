@@ -1,20 +1,35 @@
 //NPM Packages
-var express = require("express");
-var https = require("https");
-var morgan = require('morgan');
-var winston = require('winston');
-var fs = require('fs');
-var mongoose = require('mongoose');
+let express = require("express");
+let https = require("https");
+let morgan = require('morgan');
+let fs = require('fs');
+let mongoose = require('mongoose');
 //App Components
-var config = require('./config/config.js');
-var logger = require('./utils/logger.js');
-var app = express();
-var router = express.Router();
+let config = require('./config/config.js');
+let logger = require('./utils/logger.js');
+let app = express();
+let router = express.Router();
 //mongoose setup
-mongoose.connect(config.mongo.url);
+if(process.env.NODE_ENV == 'test') {
+    logger.startup("Running in TEST mode");
+    mongoose.connect(config.mongo.testurl);
+    mongoose.connection.on('error', function (err) {
+        logger.error("Error occurred connected to mongo: " + err.message);
+    });
+    mongoose.connection.once('connected', () => {
+        mongoose.connection.db.dropCollection('datas', function(err, result){});
+        mongoose.connection.db.dropCollection('sensors', function(err, result){});
+    });
+
+} else {
+    mongoose.connect(config.mongo.url);
+    mongoose.connection.on('error', function (err) {
+        logger.error("Error occurred connected to mongo: " + err.message);
+    });
+}
 //External Routes
-var data = require('./routes/data.js');
-var sensor = require('./routes/sensor.js');
+let data = require('./routes/data.js');
+let sensor = require('./routes/sensor.js');
 //Express
 app.use('/api', router);
 router.use(morgan('combined', { 'stream': logger.stream}));
@@ -23,7 +38,7 @@ router.use(function(req, res, next) {
     res.setTimeout(config.server.timeout, function() {
         res.status(408).json({
             success: false,
-            message: "Request Timed Out! an error likely occured"
+            message: "Request Timed Out! an error likely occurred"
         });
     });
     next();

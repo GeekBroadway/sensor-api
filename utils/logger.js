@@ -1,7 +1,7 @@
-var winston = require('winston');
+let winston = require('winston');
 winston.emitErrs = true;
 
-var logger = new winston.Logger({
+let logger = new winston.Logger({
     levels: {
         'debug': 0,
         'startup': 0,

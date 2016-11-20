@@ -1,4 +1,4 @@
-var config = {};
+let config = {};
 
 config.filesystem = {};
 config.filesystem.root = "/home/vagrant/sensor_backend/"; //Include the trailing slash
@@ -11,6 +11,7 @@ config.server.sslKeyPath = config.filesystem.root+'config/certs/https_key.pem';
 
 config.mongo = {};
 config.mongo.url = "mongodb://localhost/sensorapi";
+config.mongo.testurl = "mongodb://localhost/sensorapitest";
 config.mongo.limit = 100;
 
 module.exports = config;

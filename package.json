@@ -12,7 +12,11 @@
     "node-uuid": "^1.4.7",
     "winston": "^2.3.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.1.2"
+  },
   "scripts": {
     "test": "mocha --reporter spec",
     "postinstall": "./scripts/postInstall.sh"
