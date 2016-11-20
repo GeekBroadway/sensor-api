@@ -18,7 +18,7 @@
     "mocha": "^3.1.2"
   },
   "scripts": {
-    "test": "mocha --reporter spec",
+    "test": "./node_modules/mocha/bin/mocha --reporter spec",
     "postinstall": "./scripts/postInstall.sh"
   },
   "repository": {
