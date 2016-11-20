@@ -1,32 +1,15 @@
 //NPM Packages
-let express = require("express");
-let https = require("https");
-let morgan = require('morgan');
-let fs = require('fs');
-let mongoose = require('mongoose');
+const express = require("express");
+const https = require("https");
+const morgan = require('morgan');
+const fs = require('fs');
 //App Components
-let config = require('./config/config.js');
-let logger = require('./utils/logger.js');
+const config = require('./config/config.js');
+const logger = require('./utils/logger.js');
 let app = express();
 let router = express.Router();
 //mongoose setup
-if(process.env.NODE_ENV == 'test') {
-    logger.startup("Running in TEST mode");
-    mongoose.connect(config.mongo.testurl);
-    mongoose.connection.on('error', function (err) {
-        logger.error("Error occurred connected to mongo: " + err.message);
-    });
-    mongoose.connection.once('connected', () => {
-        mongoose.connection.db.dropCollection('datas', function(err, result){});
-        mongoose.connection.db.dropCollection('sensors', function(err, result){});
-    });
-
-} else {
-    mongoose.connect(config.mongo.url);
-    mongoose.connection.on('error', function (err) {
-        logger.error("Error occurred connected to mongo: " + err.message);
-    });
-}
+const mongoCon = require('./utils/mongoose.js');
 //External Routes
 let data = require('./routes/data.js');
 let sensor = require('./routes/sensor.js');
@@ -74,3 +57,5 @@ function startServer() {
         logger.startup("Ready to go on: " + config.server.port)
     });
 }
+
+module.exports = app;
