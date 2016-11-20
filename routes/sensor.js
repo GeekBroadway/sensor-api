@@ -6,7 +6,6 @@ let config = require('../config/config.js');
 let logger = require('../utils/logger.js');
 //Setup
 const sensor = express();
-sensor.use(bodyParser.urlencoded({extended: true}));
 sensor.use(bodyParser.json());
 //mongoose
 let Sensor = require('../models/sensor.js');
