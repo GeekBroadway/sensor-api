@@ -23,16 +23,13 @@ function postSensorDataRecord(req, res){
 
     let errors = req.validationErrors();
     if(errors) {
-        res.status(500).json({status: false, message: 'Val Errors', errors: errors});
+        res.status(400).json({status: false, message: 'Val Errors', errors: errors});
         return;
     }
     let sensorId = req.body.sensorId;
     let sensorData = req.body.sensorData;
-    logger.debug(req.body.sensorData);
-    logger.debug(typeof(req.body.sensorData));
     if (typeof(req.body.sensorData) === "string"){
         try {
-            logger.debug("Ran string parse function");
             sensorData = JSON.parse(req.body.sensorData);
         } catch (e) {
             res.status(400).json({
@@ -64,32 +61,33 @@ function postSensorDataRecord(req, res){
 }
 function getSensorDataByUUID(req, res){
     req.checkParams('UUID', 'Invalid sensorID').notEmpty().isUUID();
-    req.checkQuery('afterDate', 'Invalid date').isDate();
+    req.checkQuery('afterDate', 'Invalid date').optional().isDate();
 
     let errors = req.validationErrors();
     if(errors) {
-        res.status(500).json({status: false, message: 'Val Errors', errors: errors});
+        res.status(400).json({status: false, message: 'Val Errors', errors: errors});
         return;
     }
     sensorId = req.params.UUID;
-    let dataPoints = [];
     if(!req.query.afterDate) {
+        let dataPoints = [];
         Data.find({sensorId: sensorId}).sort({'recorded_at': -1}).limit(config.mongo.limit).then(function(result){
             for (let i = 0, len = result.length; i < len; i++) {
                 dataPoints.push({time: result[i].recorded_at, data: result[i].sensorData});
             }
-            res.json(dataPoints);
+            res.json({status: true, message: 'Data Retrieved', data: dataPoints});
         }).catch(function(err){
             res.status(500).json({status: false, message: "DB Error occurred", errors: err.message})
         });
     } else {
         let afterDate = new Date(req.query.afterDate);
         let currentDate = new Date;
+        let dataPoints = [];
         Data.find({sensorId: sensorId, recorded_at: {$gt: afterDate, $lt: currentDate}}).sort({'recorded_at': -1}).limit(config.mongo.limit).then(function (result) {
             for (let i = 0, len = result.length; i < len; i++) {
                 dataPoints.push({time: result[i].recorded_at, data: result[i].sensorData});
             }
-            res.json(dataPoints);
+            res.json({status: true, message: 'Data Retrieved', data: dataPoints});
         }).catch(function (err) {
             res.status(500).json({status: false, message: "DB Error occurred", errors: err.message});
         });
