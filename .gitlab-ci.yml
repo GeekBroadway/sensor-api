@@ -1,7 +1,6 @@
 image: node:latest
 
 before_script:
-  - npm -g install istanbul
   - npm install --silent
 
 cache:
