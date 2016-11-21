@@ -32,10 +32,7 @@ function postSensorDataRecord(req, res){
         try {
             sensorData = JSON.parse(req.body.sensorData);
         } catch (e) {
-            res.status(400).json({
-                status: false,
-                message: "Malformed sensorData, make sure is JSON"
-            });
+            res.status(400).json({status: false, message: "Malformed sensorData, make sure is JSON", errors: e.message});
             logger.error(e.message);
             return;
         }
@@ -51,7 +48,7 @@ function postSensorDataRecord(req, res){
                 res.status(400).json({status: false, message: "Sensor not in database", errors: null})
                 return;
             } else {
-                res.status(500).json({status: false, message: "an error occurred", errors: null});
+                res.status(500).json({status: false, message: "DB error occurred", errors: null});
                 logger.error(err);
                 return;
             }
