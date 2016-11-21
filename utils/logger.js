@@ -51,7 +51,7 @@ if(process.env.NODE_ENV !== 'test') {
         },
         transports: [
             new winston.transports.File({
-                level: 'debug',
+                level: 'error',
                 filename: './logs/testing-log.log',
                 handleExceptions: true,
                 json: true,
