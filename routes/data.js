@@ -28,8 +28,11 @@ function postSensorDataRecord(req, res){
     }
     let sensorId = req.body.sensorId;
     let sensorData = req.body.sensorData;
-    if (typeof(req.body.sensorData == "string")){
+    logger.debug(req.body.sensorData);
+    logger.debug(typeof(req.body.sensorData));
+    if (typeof(req.body.sensorData) === "string"){
         try {
+            logger.debug("Ran string parse function");
             sensorData = JSON.parse(req.body.sensorData);
         } catch (e) {
             res.status(400).json({
