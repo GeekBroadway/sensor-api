@@ -1,10 +1,13 @@
 image: node:latest
 
+before_script:
+  - npm -g install istanbul
+  - npm install --silent
+
 cache:
   paths:
   - node_modules/
 
 test:
   script:
-   - npm install
    - npm test
