@@ -27,13 +27,18 @@ function postSensorDataRecord(req, res){
         return;
     }
     let sensorId = req.body.sensorId;
-    let sensorData;
-    try {
-        sensorData = JSON.parse(req.body.sensorData);
-    } catch (e) {
-        res.status(400).json({status: false, message: "Malformed data, make sure is JSON"});
-        logger.error(e.message);
-        return;
+    let sensorData = req.body.sensorData;
+    if (typeof(req.body.sensorData == "string")){
+        try {
+            sensorData = JSON.parse(req.body.sensorData);
+        } catch (e) {
+            res.status(400).json({
+                status: false,
+                message: "Malformed sensorData, make sure is JSON"
+            });
+            logger.error(e.message);
+            return;
+        }
     }
 
     let newData = new Data({
@@ -43,10 +48,10 @@ function postSensorDataRecord(req, res){
     newData.save(function(err){
         if(err) {
             if(err.maccode === "sen_no_exist") {
-                res.status(400).json({status: false, message: "Sensor not in database"})
+                res.status(400).json({status: false, message: "Sensor not in database", errors: null})
                 return;
             } else {
-                res.status(500).json({status: false, message: "an error occurred"});
+                res.status(500).json({status: false, message: "an error occurred", errors: null});
                 logger.error(err);
                 return;
             }
@@ -72,7 +77,7 @@ function getSensorDataByUUID(req, res){
             }
             res.json(dataPoints);
         }).catch(function(err){
-            res.status(500).json({status: false, message: err.message})
+            res.status(500).json({status: false, message: "DB Error occurred", errors: err.message})
         });
     } else {
         let afterDate = new Date(req.query.afterDate);
@@ -83,7 +88,7 @@ function getSensorDataByUUID(req, res){
             }
             res.json(dataPoints);
         }).catch(function (err) {
-            res.status(500).json({status: false, message: err.message})
+            res.status(500).json({status: false, message: "DB Error occurred", errors: err.message});
         });
     }
 }
