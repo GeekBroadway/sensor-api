@@ -2,6 +2,7 @@ let winston = require('winston');
 winston.emitErrs = true;
 
 let logger;
+/* istanbul ignore if */
 if(process.env.NODE_ENV !== 'test') {
     logger = new winston.Logger({
         levels: {
