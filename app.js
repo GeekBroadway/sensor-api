@@ -20,7 +20,7 @@ router.use(morgan('combined', { 'stream': logger.stream}));
 router.use(function(req, res, next) {
     res.setTimeout(config.server.timeout, function() {
         res.status(408).json({
-            success: false,
+            status: false,
             message: "Request Timed Out! an error likely occurred"
         });
     });
@@ -41,10 +41,19 @@ app.get('/', function(req, res){
         message: 'API is at /api'
     });
 });
+/* istanbul ignore else */
+if(process.env.NODE_ENV === 'test'){
+    router.get('/test/timeout', function(req,res){
+       //Don't send a response
+    });
+    router.get('/test/error', function(req,res){
+       throw new Error("This is an error test");
+    });
+}
 //Errors and Timeouts
 app.use(function(err, req, res, next) {
     logger.error(err.stack);
-    res.status(500).json({status: 'Something broke!'});
+    res.status(500).json({status: false, message: 'Something broke!', errors: null});
     next();
 });
 //Server Startup
