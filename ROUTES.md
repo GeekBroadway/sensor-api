@@ -4,7 +4,7 @@
     
     **(500 Internal Server Error)** Error occured processing request, 
     this can occur under any route
-    ``` javascript
+    ```json
     {
       "status": false,
       "message": "Something Broke!",
@@ -15,11 +15,16 @@
     - URL Params: null
     - Data Params: null
     - Success Response: **(200 OK)**
-        - `{name: Sensor API, version: 0.1.0}`
+       ```json
+       {
+          "name": "Sensor API", 
+          "version": 0.1.0
+       }
+       ```
 - **POST** /api/sensor/add
     - URL Params: null
     - Data Params: 
-        ``` javascript
+        ```json
         {
         	"name": "Sensor 1",
         	"type": "Temp & Humidity",
@@ -28,7 +33,7 @@
         }
         ```
     - Success Response: **(200 OK)**
-        ``` javascript
+        ```json
             {
                 "status": true,
                 "message": "sensor added",
@@ -37,7 +42,7 @@
         ```
     - Error Response:
         **(400 Bad Request)** caused by not supplying all parameters
-        ``` javascript
+        ```json
         {
           "status": false,
           "message": "Val Errors",
