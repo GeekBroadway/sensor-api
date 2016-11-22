@@ -58,7 +58,8 @@ function postSensorDataRecord(req, res){
 }
 function getSensorDataByUUID(req, res){
     req.checkParams('UUID', 'Invalid sensorID').notEmpty().isUUID();
-    req.checkQuery('afterDate', 'Invalid date').optional().isDate();
+    req.checkQuery('afterDate', 'Invalid date').optional();
+    req.sanitizeQuery('afterDate').toInt();
 
     let errors = req.validationErrors();
     if(errors) {
@@ -80,14 +81,21 @@ function getSensorDataByUUID(req, res){
         let afterDate = new Date(req.query.afterDate);
         let currentDate = new Date;
         let dataPoints = [];
-        Data.find({sensorId: sensorId, recorded_at: {$gt: afterDate, $lt: currentDate}}).sort({'recorded_at': -1}).limit(config.mongo.limit).then(function (result) {
-            for (let i = 0, len = result.length; i < len; i++) {
-                dataPoints.push({time: result[i].recorded_at, data: result[i].sensorData});
-            }
-            res.json({status: true, message: 'Data Retrieved', data: dataPoints});
-        }).catch(function (err) {
-            res.status(500).json({status: false, message: "DB Error occurred", errors: err.message});
-        });
+        if (afterDate !== null) {
+            Data.find({
+                sensorId: sensorId,
+                recorded_at: {$gt: afterDate.getTime(), $lt: currentDate.getTime()}
+            }).sort({'recorded_at': -1}).limit(config.mongo.limit).then(function (result) {
+                for (let i = 0, len = result.length; i < len; i++) {
+                    dataPoints.push({time: result[i].recorded_at, data: result[i].sensorData});
+                }
+                res.json({status: true, message: 'Data Retrieved', data: dataPoints});
+            }).catch(function (err) {
+                res.status(500).json({status: false, message: "DB Error occurred", errors: err.message});
+            });
+        } else {
+            res.status(400).json({status: false, message: "Invalid date parsed, provide milliseconds epoch", errors: null});
+        }
     }
 }
 module.exports = data;

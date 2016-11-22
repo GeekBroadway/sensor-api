@@ -9,8 +9,8 @@ chai.use(chaiHttp);
 
 let UUID;
 let falseUUID = 'c5233e47-604a-435d-bf92-c2fd61defb85';
-let currentDate = new Date();
-let futureDate = new Date(currentDate.valueOf()+(60*60000));
+let currentDate = new Date().getTime();
+let futureDate = (new Date(currentDate+(60*60000))).getTime();
 
 before(function(done){
     addSensor(function(uuid){

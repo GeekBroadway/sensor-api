@@ -7,7 +7,7 @@ const Sensor = require('./sensor');
 const Schema = mongoose.Schema;
 
 let DataSchema = new Schema({
-    recorded_at: {type: Date, required: true, default: Date.now},
+    recorded_at: {type: String, required: true, default: Date.now},
     sensorId: {type: String, required: true},
     sensorData: {type: Schema.Types.Mixed, required: true}
 });
