@@ -156,7 +156,7 @@ describe('GET /api/data/retrieve/UUID', function(){
                done();
            });
     });
-    it('return empty and true for a future date', function(done){
+    it('should return empty and true for a future date', function(done){
        chai.request(server)
            .get('/api/data/retrieve/'+UUID+'?afterDate='+futureDate)
            .end(function (err, res) {
@@ -167,7 +167,7 @@ describe('GET /api/data/retrieve/UUID', function(){
                done();
            });
     });
-    it('not found not given a UUID', function(done){
+    it('should return not found not given a UUID', function(done){
        chai.request(server)
            .get('/api/data/retrieve/')
            .end(function (err, res) {
@@ -175,7 +175,7 @@ describe('GET /api/data/retrieve/UUID', function(){
                done();
            });
     });
-    it('Error given an incorrect UUID', function(done){
+    it('should error given an incorrect UUID', function(done){
         chai.request(server)
             .get('/api/data/retrieve/'+UUID+'1')
             .end(function (err, res) {
